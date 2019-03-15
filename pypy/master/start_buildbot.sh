@@ -6,6 +6,8 @@
 
 B=`pwd`
 
+echo "!!!!!!!!!This is for test!!!!!!!!!!!!"
+
 if [ -z "$BUILDBOT_CONFIG_URL" ]
 then
     if [ ! -f "$B/master.cfg" ]
