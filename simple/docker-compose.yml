@@ -7,20 +7,24 @@ services:
     environment:
       - BUILDBOT_CONFIG_DIR=config
       - BUILDBOT_CONFIG_URL=https://github.com/nakyong/buildbot-docker-example-config/archive/master.tar.gz
-      - BUILDBOT_WORKER_PORT=9989
+      - BUILDBOT_WORKER_PORT=1234
       - BUILDBOT_WEB_URL=http://168.219.243.49:8010/
       - BUILDBOT_WEB_PORT=tcp:port=8010
     links:
-      - worker
+      - db
     ports:
       - "8010:8010"
-
-
+  db:
+    env_file:
+      - db.env
+    image: "postgres:9.4"
+    expose:
+      - 5432
   worker:
     image: "hwang-worker"
     environment:
       BUILDMASTER: buildbot
-      BUILDMASTER_PORT: 9989
+      BUILDMASTER_PORT: 1234
       WORKERNAME: hwang-worker
       WORKERPASS: pass
       WORKER_ENVIRONMENT_BLACKLIST: DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST
